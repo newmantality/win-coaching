@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "functions": {
+    "api/*.mjs": { "runtime": "nodejs20.x" }
+  },
+  "rewrites": [
+    { "source": "/api/status", "destination": "/api/status.mjs" },
+    { "source": "/api/generate-play", "destination": "/api/generate-play.mjs" }
+  ]
+}

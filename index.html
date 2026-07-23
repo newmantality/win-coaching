@@ -1,0 +1,194 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#0b1020" />
+  <title>WIN Coaching — Basketball Coaching Platform</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="onboarding" class="modal-backdrop hidden">
+    <section class="modal card" role="dialog" aria-modal="true" aria-labelledby="onboardingTitle">
+      <p class="eyebrow">WELCOME TO PROJECT WIN</p>
+      <h1 id="onboardingTitle">Set up your coaching workspace</h1>
+      <p>This takes less than a minute and saves to this device.</p>
+      <div class="grid two compact-grid">
+        <label>Your name<input id="coachName" placeholder="Coach Newman" /></label>
+        <label>Organization<input id="orgName" placeholder="Maine East Girls Basketball" /></label>
+        <label>Role<select id="coachRole"><option>Head Coach</option><option>Assistant Coach</option><option>Program Director</option><option>Athletic Director</option></select></label>
+        <label>Primary team<input id="primaryTeam" placeholder="Varsity" /></label>
+      </div>
+      <button id="finishSetup" class="primary full">Create workspace</button>
+    </section>
+  </div>
+  <header class="topbar">
+    <div class="brand">
+      <div class="brand-word">WIN<span>.</span><small>COACHING</small></div>
+    </div>
+    <div class="top-actions"><select id="teamSwitcher" aria-label="Active team"></select><button id="profileBtn" class="avatar" aria-label="Edit profile">CN</button><button id="menuBtn" class="icon-btn" aria-label="Open menu">☰</button></div>
+  </header>
+
+  <div class="app-shell">
+    <aside id="sidebar" class="sidebar">
+      <nav>
+        <button class="nav-item active" data-view="dashboard">⌂ Dashboard</button>
+        <button class="nav-item" data-view="playbook">▣ Playbook</button>
+        <button class="nav-item" data-view="generator">✦ AI Play Generator</button>
+        <button class="nav-item" data-view="editor">✎ Play Editor</button>
+        <button class="nav-item" data-view="practice">□ Practice Planner</button>
+        <button class="nav-item" data-view="program">♙ Program Hub</button>
+        <button class="nav-item" data-view="pricing">$ Plans</button>
+      </nav>
+      <div class="sport-picker">
+        <label for="sportSelect">Sport</label>
+        <select id="sportSelect">
+          <option>Basketball</option>
+          <option disabled>Football — coming soon</option>
+          <option disabled>Volleyball — coming soon</option>
+          <option disabled>Lacrosse — coming soon</option>
+        </select>
+      </div>
+    </aside>
+
+    <main class="main">
+      <section id="dashboard" class="view active">
+        <div class="dash-head">
+          <div><p class="eyebrow">MAINE EAST HIGH SCHOOL</p><h1>Good morning, <span id="greetingName">Coach</span> 👋</h1></div>
+          <button class="primary" data-go="generator">＋ New Play</button>
+        </div>
+        <div class="stats-grid">
+          <article class="stat-card"><span>MY PLAYS</span><strong id="savedCount">0</strong><small>Total saved</small></article>
+          <article class="stat-card"><span>PRACTICES</span><strong id="practiceCount">2</strong><small>This week</small></article>
+          <article class="stat-card"><span>TEAMS</span><strong>3</strong><small>Active teams</small></article>
+          <article class="stat-card"><span>AI PLAYS</span><strong id="aiCount">0</strong><small>This month</small></article>
+        </div>
+        <div class="dashboard-layout">
+          <div>
+            <div class="section-head"><h2>My Teams</h2><button class="text-btn" data-go="program">View all</button></div>
+            <div class="team-strip">
+              <article class="team-tile active-team"><div class="team-logo">M</div><div><strong>VARSITY</strong><span>20 Players</span></div><b>Active</b></article>
+              <article class="team-tile"><div class="team-logo gray">M</div><div><strong>JV</strong><span>18 Players</span></div></article>
+              <article class="team-tile"><div class="team-logo gray">M</div><div><strong>FRESHMAN</strong><span>16 Players</span></div></article>
+            </div>
+            <h2>Quick Actions</h2>
+            <div class="quick-actions">
+              <button data-go="generator"><i>✦</i><span>AI Play<br>Generator</span></button>
+              <button data-go="editor"><i>✎</i><span>Play<br>Editor</span></button>
+              <button data-go="practice"><i>□</i><span>Practice<br>Planner</span></button>
+              <button data-go="program"><i>⌕</i><span>Program<br>Hub</span></button>
+              <button data-go="playbook"><i>⇧</i><span>Share<br>Playbook</span></button>
+            </div>
+            <div class="section-head recent-head"><h2>Recent Plays</h2><button class="text-btn" data-go="playbook">View all</button></div>
+            <div id="recentPlays" class="recent-grid empty">No plays saved yet.</div>
+          </div>
+          <aside class="right-rail">
+            <article class="card"><div class="section-head"><h2>Upcoming</h2><button class="text-btn" data-go="practice">View</button></div><div class="upcoming"><div><b>Practice</b><span>Today · 4:00 PM</span></div><div><b>vs. Maine West</b><span>Tomorrow · 7:00 PM</span></div><div><b>Practice</b><span>Friday · 4:00 PM</span></div></div></article>
+            <article class="card coach-tip"><p class="eyebrow">COACH COPILOT</p><h2>What do you need today?</h2><p>Generate a play, organize practice, or prepare your program in seconds.</p><button class="primary full" data-go="generator">Ask Coach Copilot</button></article>
+          </aside>
+        </div>
+      </section>
+
+      <section id="generator" class="view">
+        <div class="section-head"><div><p class="eyebrow">BASKETBALL</p><h1>AI Play Generator</h1><p class="helper">Describe the situation in your own words or use the guided options.</p></div><span id="aiStatus" class="pill">Checking AI…</span></div>
+        <div class="grid two generator-grid">
+          <form id="generatorForm" class="card form-card">
+            <label>Ask Coach Copilot<textarea id="aiPrompt" rows="4" placeholder="Example: Need a BLOB against a 2-3 zone. My best shooter is #12 and we need a three with 8 seconds left."></textarea></label>
+            <label>Situation<select id="situation"><option>Half-court offense</option><option>Baseline out of bounds</option><option>Sideline out of bounds</option><option>After timeout</option><option>Press break</option><option>Last-second shot</option></select></label>
+            <label>Defense<select id="defense"><option>Man-to-man</option><option>2-3 zone</option><option>1-3-1 zone</option><option>Full-court press</option><option>Switch everything</option></select></label>
+            <label>Primary goal<select id="goal"><option>Open three</option><option>Layup</option><option>Post touch</option><option>Best player isolation</option><option>Backdoor cut</option></select></label>
+            <label>Team strength<select id="strength"><option>Quick guards</option><option>Elite shooter</option><option>Strong post player</option><option>Good screeners</option><option>Athletic cutters</option></select></label>
+            <label>Play name<input id="playName" placeholder="Leave blank for automatic name" /></label>
+            <button id="generateBtn" class="primary full" type="submit">Generate AI play</button><p id="generatorMessage" class="helper">Your API key stays on the server and is never exposed in the browser.</p>
+          </form>
+          <article class="card result-card">
+            <div class="section-head"><h2 id="generatedTitle">Your generated play</h2><span id="generatedTag" class="pill">Ready</span></div>
+            <div id="generatedCourt" class="court-wrap"></div>
+            <div id="generatedDetails" class="details empty">Choose your options and tap Generate.</div>
+            <div class="actions">
+              <button id="saveGenerated" class="primary" disabled>Save to playbook</button>
+              <button id="shareGenerated" class="secondary" disabled>Share</button>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="editor" class="view">
+        <div class="section-head"><div><p class="eyebrow">CUSTOM</p><h1>Custom Play Editor</h1></div></div>
+        <div class="grid two editor-grid">
+          <article class="card">
+            <div class="editor-toolbar">
+              <input id="customName" value="My Custom Play" aria-label="Custom play name" />
+              <button id="resetPlayers" class="secondary">Reset</button>
+            </div>
+            <div id="customCourt" class="court-wrap editable"></div>
+            <p class="helper">Drag the numbered players to position them.</p>
+          </article>
+          <article class="card form-card">
+            <label>Play steps<textarea id="customSteps" rows="10">1. Player 1 starts at the top of the key.\n2. Player 5 sets a ball screen.\n3. Player 2 lifts to the wing.\n4. Player 1 attacks and reads the help defense.</textarea></label>
+            <label>Coaching points<textarea id="customNotes" rows="5">Set up the screen. Change pace. Make the simple read.</textarea></label>
+            <button id="saveCustom" class="primary full">Save custom play</button>
+          </article>
+        </div>
+      </section>
+
+      <section id="practice" class="view">
+        <div class="section-head"><div><p class="eyebrow">PLAN THE WORK</p><h1>Practice Planner</h1></div><button id="addPracticeBlock" class="primary">＋ Add Block</button></div>
+        <div class="grid two">
+          <article class="card form-card">
+            <label>Practice title<input id="practiceTitle" value="Varsity Practice" /></label>
+            <label>Date<input id="practiceDate" type="date" /></label>
+            <label>Focus<select id="practiceFocus"><option>Game preparation</option><option>Shooting and skill development</option><option>Defense and rebounding</option><option>Offensive installation</option><option>Recovery practice</option></select></label>
+            <button id="buildPractice" class="primary full">Build 90-minute practice</button>
+          </article>
+          <article class="card"><div class="section-head"><h2 id="practicePlanTitle">Practice Plan</h2><span class="pill">90 min</span></div><div id="practiceBlocks" class="practice-blocks"><div class="empty">Choose a focus and build your practice.</div></div><button id="sharePractice" class="secondary full" disabled>Share with staff</button></article>
+        </div>
+      </section>
+
+      <section id="playbook" class="view">
+        <div class="section-head"><div><p class="eyebrow">LIBRARY</p><h1>My Playbook</h1></div><button id="sharePlaybook" class="primary">Share playbook</button></div>
+        <div id="playbookGrid" class="playbook-grid"></div>
+      </section>
+
+      <section id="program" class="view">
+        <div class="section-head"><div><p class="eyebrow">ORGANIZATION</p><h1>Program Hub</h1></div></div>
+        <div class="grid three">
+          <article class="card team-card"><h3>Varsity</h3><p>4 coaches • 14 players</p><button class="secondary full open-team" data-team="Varsity">Open team</button></article>
+          <article class="card team-card"><h3>JV</h3><p>2 coaches • 13 players</p><button class="secondary full open-team" data-team="JV">Open team</button></article>
+          <article class="card team-card"><h3>Freshman</h3><p>2 coaches • 15 players</p><button class="secondary full open-team" data-team="Freshman">Open team</button></article>
+        </div>
+        <article class="card invite-card">
+          <div><p class="eyebrow">STAFF ACCESS</p><h2>Invite a coach</h2><p>Add assistants or lower-level coaches to your program workspace.</p></div>
+          <div class="invite-row"><input id="inviteEmail" type="email" placeholder="coach@school.org" /><select id="inviteTeam"><option>Varsity</option><option>JV</option><option>Freshman</option></select><button id="inviteCoach" class="primary">Send invite</button></div>
+          <div id="inviteList" class="invite-list"></div>
+        </article>
+        <article class="card program-library">
+          <h2>Program Library</h2>
+          <p>Push terminology, plays, and practice standards to every level in one click.</p>
+          <div class="share-row"><span>Motion Offense Package</span><button class="primary">Share to all teams</button></div>
+          <div class="share-row"><span>Full-Court Press Break</span><button class="primary">Share to all teams</button></div>
+        </article>
+      </section>
+
+      <section id="pricing" class="view">
+        <div class="section-head"><div><p class="eyebrow">PRICING</p><h1>Simple plans</h1></div></div>
+        <div class="pricing-grid">
+          <article class="card price-card"><h3>Coach</h3><div class="price">$4.99<span>/month</span></div><p>or $49.99/year</p><ul><li>1 coach account</li><li>Unlimited plays</li><li>Custom editor</li><li>Player sharing</li></ul><button class="secondary full">Start free</button></article>
+          <article class="card price-card featured"><div class="badge">BEST FOR PROGRAMS</div><h3>Program</h3><div class="price">$599<span>/year</span></div><p>One basketball program</p><ul><li>Up to 10 coaches</li><li>Unlimited teams</li><li>Shared program library</li><li>Admin controls</li></ul><button class="primary full">Request access</button></article>
+          <article class="card price-card"><h3>Athletic Department</h3><div class="price">$1,999<span>/year</span></div><p>Every sport at one school</p><ul><li>Unlimited sports</li><li>Unlimited teams</li><li>AD dashboard</li><li>Priority onboarding</li></ul><button class="secondary full">Contact sales</button></article>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <nav class="bottom-nav" aria-label="Mobile navigation">
+    <button class="mobile-nav active" data-view="dashboard"><span>⌂</span>Dashboard</button>
+    <button class="mobile-nav" data-view="playbook"><span>▣</span>Playbook</button>
+    <button class="mobile-plus" data-view="generator">＋</button>
+    <button class="mobile-nav" data-view="program"><span>♙</span>Teams</button>
+    <button class="mobile-nav" data-view="pricing"><span>•••</span>More</button>
+  </nav>
+  <script src="app.js"></script>
+</body>
+</html>
