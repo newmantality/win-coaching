@@ -1,5 +1,0 @@
-{
-  "rewrites": [
-    {
-      "source": "/api/status",
-      "destination": "/api/status.mjs"
